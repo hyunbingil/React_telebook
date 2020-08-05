@@ -19,3 +19,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# dependencies
+/counter-project/node_modules
+/counter-project/.pnp
+
+# testing
+/counter-project/coverage
+
+# production
+/counter-project/build

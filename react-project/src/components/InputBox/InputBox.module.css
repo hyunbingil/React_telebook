@@ -2,23 +2,23 @@
     margin: 50px 0;
     display: flex;
     flex-direction: column;
-  }
-  
+}
+
 .input_box {
     padding: 10px 0;
 }
-  
+
 .input_box_name {
     margin-bottom: 3px;
 }
-  
+
 .input_box_input {
     width: 100%;
     padding: 10px;
     font-size: 1rem;
     outline: none;
 }
-  
+
 .input_box_button {
     margin-left: auto;
     width: 100px;
@@ -30,7 +30,7 @@
     cursor: pointer;
     margin-top: 10px;
 }
-  
+
 .input_box_button:hover {
     background: #495057;
     color: white;
