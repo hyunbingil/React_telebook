@@ -83,3 +83,5 @@ ReactDOM.render(
 : 이름, 전화번호, 삭제 버튼을 가진 컴포넌트.
 4. InputBox 컴포넌트\
 :  이름과 전화번호를 입력받는 폼이 있는 컴포넌트.
+
+<img src="./img/tel.PNG">
