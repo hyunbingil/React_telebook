@@ -24,6 +24,25 @@ class App extends Component {
     number: 0
   };
 
+  constructor(props) {
+    super(props);
+    console.log("constructor 호출");
+  }
+
+  componentDidMount() {
+    console.log("componentDidMount 호출");
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    console.log("shouldComponentUpdate 호출");
+    if (nextState.number % 3 === 0) return false;
+    return true;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("componentDidUpdate 호출");
+  }
+
   // 1. state를 업데이트하는 함수를 전달
   countUp = () => {
     this.setState(({ number }) => ({
@@ -42,14 +61,16 @@ class App extends Component {
     const { countUp, countDown } = this;
     const { number } = this.state;
 
+    console.log("render 호출");
+
     return (
-			<Wrapper>
-				<ButtonWrapper>
-					<CountButton onClick={countUp} text="+" />
-					<CountButton onClick={countDown} text="-" />
-				</ButtonWrapper>
-				<Number number={number} />
-			</Wrapper>
+      <Wrapper>
+        <ButtonWrapper>
+          <CountButton onClick={countUp} text="+" />
+          <CountButton onClick={countDown} text="-" />
+        </ButtonWrapper>
+        <Number number={number} />
+      </Wrapper>
     );
   }
 }
