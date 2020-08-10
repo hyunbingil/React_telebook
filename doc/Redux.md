@@ -190,7 +190,7 @@ const mapDispatchToProps = dispatch => ({
 });
 ```
 
-### 7. 적용하기
+### 7. ```App.js```에 적용하기
 ``` js
 // 경로 : src/App.js
 
@@ -242,3 +242,70 @@ export default connect(mapStateToProps, mapDispatchToProps)(App);
 ```
 - bindActionCreators 함수\
 : 쉽게 여러 액션 생성자 함수를 dispatch에 연결 가능.
+
+### 8. 더 나아가서(```reducer.js```)
+: redux-actions 라이브러리를 통해 redux 코드를 줄여보자.\
++) Immer 라이브러리 활용해서 불변성을 지켜보자.
+#### createAction
+: 간편하게 액션 생성자를 만들어주는 함수.\
+: 인자값으로 2가지를 넘겼는데, 하나는 액션 타입이고 다른 하나는 payloadCreator이다.\
+: 액션 타입은 위에서 정의했던 액션 타입 상수를 넣었고, payloadCreator는 함수의 형태로 넘겨주었다.
+> 어떤 데이터를 받는다는 것을 명시하기 위해 넣어줌.
+>> payloadCreator는 생략 가능.
+``` js
+export const increase = createAction(INCREASE, number => number);
+export const decrease = createAction(DECREASE, number => number);
+```
+#### handleActions
+: Redux의 핵심 부분인 리듀서 부분을 더 간편하게 만들어주는 함수이다.\
+: 인자값으로 2가지를 넘겼는데, 하나는 리듀서이고 다른 하나는 initialState 값이다.\
+: 작동 방식은 스위치문으로 앞에서 작성된 리듀서와 동일하다.
+``` js
+export default handleActions({
+  [INCREASE]: (state, action) => 
+    produce(state, draft => {
+      draft.number = action.payload
+    }),
+  [DECREASE]: (state, action) => 
+    produce(state, draft => {
+      draft.number = action.payload
+    })
+}, initialState);
+```
+- reducer.js
+``` js
+// 경로 : src/store/reducer.js
+
+import { createAction, handleActions } from 'redux-actions';
+import produce from 'immer';
+
+const INCREASE = 'INCREASE';
+const DECREASE = 'DECREASE';
+
+export const increase = createAction(INCREASE, number => number);
+export const decrease = createAction(DECREASE, number => number);
+
+const initialState = {
+  number: 0
+};
+
+export default handleActions({
+  [INCREASE]: (state, action) => 
+    produce(state, draft => {
+      draft.number = action.payload
+    }),
+  [DECREASE]: (state, action) => 
+    produce(state, draft => {
+      draft.number = action.payload
+    })
+}, initialState);
+```
+
+## Immer 라이브러리
+: 불변성을 신경 쓰지 않는 것처럼 코드를 짜도 알아서 관리해줌.
+<img src="https://grm-project-template-bucket.s3.ap-northeast-2.amazonaws.com/lesson/les_QDgwi_1574828974581/0d032f613a7ad424d27b021420821a6fd7392a992bb2a6c595909b940cd360e6.PNG">
+
+1. 현재 상태를 임시적인 Draft에 적용하고, 사용자는 이 Draft를 수정하게된다.
+2. 수정이 완료되면 Draft를 통해 새로운 상태를 만들어 반환.
+
+=> 실제로는 불변성이 잘 지켜지고 있는 것.
