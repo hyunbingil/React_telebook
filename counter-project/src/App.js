@@ -1,7 +1,12 @@
-import React, { useState, useEffect } from "react";
+// 경로 : src/App.js
+
+import React from "react";
 import CountButton from "./components/CountButton";
 import Number from "./components/Number";
 import styled from "styled-components";
+import { connect } from "react-redux";
+import * as counter from "./store/reducer";
+import { bindActionCreators } from "redux";
 
 const Wrapper = styled.div`
   margin: 0 auto;
@@ -19,34 +24,25 @@ const ButtonWrapper = styled.div`
   margin-bottom: 50px;
 `;
 
-const App = () => {
-  const [ number, setNumber ] = useState(0);
-
-  useEffect(() => {
-    console.log("useEffect -> componentDidMount");
-
-    return () => {
-      console.log("useEffect -> componentWillUnmount");
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log(`componentDidUpdate (number) -> ${number}`);
-  }, [number]);
-
-  useEffect(() => {
-    console.log("useEffect -> componentDidUpdate");
-  });
-
+const App = ({ number, counter }) => {
   return (
     <Wrapper>
       <ButtonWrapper>
-        <CountButton onClick={() => setNumber(number + 1)} text="+" />
-        <CountButton onClick={() => setNumber(number - 1)} text="-" />
+        <CountButton onClick={() => counter.increase(number + 1)} text="+" />
+        <CountButton onClick={() => counter.decrease(number - 1)} text="-" />
       </ButtonWrapper>
       <Number number={number} />
     </Wrapper>
   );
-}
+};
 
-export default App;
+const mapStateToProps = state => ({
+  number: state.number
+});
+
+const mapDispatchToProps = dispatch => ({
+  counter: bindActionCreators(counter, dispatch)
+  // bindActionCreators 함수를 사용하면 쉽게 여러 액션 생성자 함수를 dispatch에 연결 가능.
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
