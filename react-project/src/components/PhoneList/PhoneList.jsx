@@ -1,3 +1,5 @@
+// 경로 : src/components/PhoneList/PhoneList.js
+
 import React from "react";
 import PhoneItem from "../PhoneItem";
 import styled from "styled-components";
@@ -14,13 +16,6 @@ const PhoneList = ({ list, deleteItem }) => {
       {Object.values(list).map(item => {
         return <PhoneItem {...item} key={item.id} onClick={deleteItem} />;
       })}
-      {/* <PhoneItem {...list["0"]} />
-       {/* <PhoneItem id={list["0"].id} name={list["0"].name}
-       phone={list["0"].phone} /> 과 동일 *}
-      <PhoneItem {...list["1"]} />
-      <PhoneItem {...list["2"]} />
-      <PhoneItem {...list["3"]} />
-      <PhoneItem {...list["4"]} /> */}
     </PhoneWrapper>
   );
 };

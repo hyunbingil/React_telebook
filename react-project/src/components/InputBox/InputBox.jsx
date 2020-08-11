@@ -1,7 +1,9 @@
+// 경로 : src/components/InputBox/InputBox.js
+
 import React from "react";
 import styles from "./InputBox.module.css";
 
-const InputBox = ({ name, phone, onChangeName, onChangePhone, onSubmit }) => {
+const InputBox = ({ name, phone, onChange, onSubmit }) => {
   return (
     <div className={styles.input_boxes}>
       <div className={styles.input_box}>
@@ -11,7 +13,7 @@ const InputBox = ({ name, phone, onChangeName, onChangePhone, onSubmit }) => {
           placeholder="이름"
           name="name"
           className={styles.input_box_input}
-          onChange={onChangeName}
+          onChange={onChange} // onChange 함수로 합침.
           value={name}
         />
       </div>
@@ -22,7 +24,7 @@ const InputBox = ({ name, phone, onChangeName, onChangePhone, onSubmit }) => {
           placeholder="전화번호"
           name="phone"
           className={styles.input_box_input}
-          onChange={onChangePhone}
+          onChange={onChange}
           value={phone}
         />
       </div>
